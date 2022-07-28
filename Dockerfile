@@ -20,6 +20,10 @@ RUN  R -e "install.packages(c('qqman'),dependencies=TRUE, repos='http://cran.rst
 
 COPY scripts ./scripts
 
+RUN apt-get install -y dos2unix
+RUN dos2unix /app/scripts/script.sh
+RUN chmod 775 /app/scripts/script.sh
+
 #ENTRYPOINT ["bash", "/app/scripts.sh"]
 CMD ["bash", "/app/scripts/script.sh"]
 

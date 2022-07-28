@@ -6,6 +6,7 @@
 set -x;
 binary_dir='/local/datasets/fmapping';
 db_dir='/local/datasets/fmapping';
+
 gwas_summary=$1;
 outdir=$2;
 locations=$3;   ## {'37:EUR', '37:AFR', '37:EAS', '37:EUR-AFR', '37:EUR-EAS', '37:EAS-AFR', '37:EUR-EAS-AFR', or '38:'-prefix}

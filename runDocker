@@ -1,13 +1,10 @@
 ## Variables for bind mount
-db='Path-to-db'
-outdir="path-outfir"
+db='/mnt/d/focus-fmap'
+outdir="/mnt/d/focus-fmap/output"
 inputfile="UK_focus.0.05_rs.txt"
 
 ##image name is fine-mapping-focus
-docker run --rm -it --name testing -v ${db}:/db -v ${outdir}:/home/outdir -v ${inputfile}:/app/gwas.txt \
--v /app/scripts \
-fine-mapping-focus \
-bash /app/scripts/script.sh \
-/app/gwas.txt \
-/home/outdir \
-37:EUR eur 2 False 0.5 0.1 false 3 1e-3 0.9 0.7 0.5 true none 10583 1892607
+docker run --rm -it --name testing -v /run/desktop/mnt/host/d/focus-fmap:/db -v /run/desktop/mnt/host/d/focus-fmap/output:/home/outdir -v /run/desktop/mnt/host/c/Users/daref/Documents/NodeBackend/finemapping-focus/UK_focus.0.05_rs.txt:/app/gwas.txt -v /app/scripts focus-fmap bash /app/scripts/script.sh /app/gwas.txt /home/outdir 37:EUR eur 2 False 0.5 0.1 false 3 1e-3 0.9 0.7 0.5 true none 10583 1892607
+
+
+
