@@ -4,24 +4,20 @@ ENV PIP_IGNORE_INSTALLED=0
 
 WORKDIR /app
 
-#update linux packages
-RUN apt update && apt-get install -y --no-install-recommends &&  apt-get install -y ca-certificates
-RUN apt-get update && apt-get -y install r-base r-base-dev
+## Install Spark and GNU parallel
+RUN apt update  && apt full-upgrade -y
+#&&  apt install unzip parallel tar libgomp1 wget default-jdk scala git -y
+#RUN wget https://downloads.apache.org/spark/spark-3.3.0/spark-3.3.0.tar.gz
+RUN apt install libgl1 ffmpeg libsm6 libxext6  -yf
 
-COPY requirements.txt  .
+# install python packages
+COPY ./requirements.txt  .
 RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-## R packages: r-devtools, rcpp
-RUN  R -e "install.packages(c('devtools','Rcpp','expm'),dependencies=TRUE, repos='http://cran.rstudio.com/')"
-RUN  R -e "install.packages(c('Ckmeans.1d.dp','wavethresh','RcppZiggurat', 'stringi','RcppGSL','Rfast','matrixStats'),dependencies=TRUE, repos='http://cran.rstudio.com/')"
-#RUN  R -e "install.packages('expm',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-#RUN  R -e "install.packages('expm',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-
-COPY packages/susieR-0.8.0.tar.gz .
-
-RUN R CMD INSTALL  susieR-0.8.0.tar.gz
-RUN rm susieR-0.8.0.tar.gz
+# install R and packages
+RUN apt-get update && apt-get -y install r-base r-base-dev
+RUN  R -e "install.packages(c('qqman'),dependencies=TRUE, repos='http://cran.rstudio.com/')"
 
 #install node and npm
 ENV NODE_VERSION=16.13.0
@@ -49,5 +45,3 @@ RUN chmod 775 pipeline_scripts/pipeline.sh
 RUN npm run build
 
 CMD [ "npm", "run", "start:prod" ]
-## testing with bind mount
-#CMD ["/bin/bash", "-c", "/app/pipeline_scripts/pipeline.sh"]
