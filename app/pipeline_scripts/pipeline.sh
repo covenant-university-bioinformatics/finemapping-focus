@@ -4,8 +4,13 @@
 #  At a minimum, FOCUS requires CHR, SNP, BP, A1 (effect allele), A2, BETA (or OR), and P to produce a munged GWAS data file.
 #  CHR, SNP, BP, A1 (effect allele), A2, BETA/OR, and P
 set -x;
-binary_dir='/local/datasets/fmapping';
-db_dir='/local/datasets/fmapping';
+#development
+#binary_dir='/local/datasets/fmapping';
+#db_dir='/local/datasets/fmapping';
+
+#production
+binary_dir='/local/datasets/focus-fmap';
+db_dir='/local/datasets/focus-fmap';
 
 gwas_summary=$1;
 outdir=$2;
