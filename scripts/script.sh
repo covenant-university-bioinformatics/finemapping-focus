@@ -15,12 +15,12 @@ chr=$5               ## {1-22}
 all_gwas_sig=$6      ## {defaut False; True, False} ## case sensitive
 p_threshold=$7        ## {default=5e-8}
 ridge_term=$8         ##  {default=0.1, type=float}
-intercept=$9          ## {true, false; default=false,}
-max_genes=${10}       ## {default=3} 
-prior_prob=${11}      ##  {default gencode38 ; gencode38, gencode37 or numeric 1e-3}
-credible_level=${12}  ## {default=0.9}
-min_r2pred=${13}      ## {type=float, default=0.7}
-max_impute=${14}      ## {type=float, default=0.5}
+#intercept=$9          ## {true, false; default=false,}
+max_genes=9      ## {default=3} 
+prior_prob=${10}      ##  {default gencode38 ; gencode38, gencode37 or numeric 1e-3}
+credible_level=${11}  ## {default=0.9}
+min_r2pred=${12}      ## {type=float, default=0.7}
+max_impute=${13}      ## {type=float, default=0.5}
 options=" --locations ${locations} \
 --chr ${chr} --all-gwas-sig ${all_gwas_sig} \
 --p-threshold ${p_threshold} \
@@ -34,24 +34,25 @@ options=" --locations ${locations} \
 optional=' ';
 ### optinal
 
-if [[ ${intercept} = 'true' ]]; then
-optional=" ${optional}  --intercept "
-fi
-plot=${15}   ## {true false}
+  #if [[ ${intercept} = 'true' ]]; then
+  #optional=" ${optional}  --intercept "
+  #fi
+
+plot=${14}   ## {true false}
 if [[ ${plot} = 'true' ]]; then
 optional=" ${optional}  --plot "
 fi
-tissue=${16} ## default none
+tissue=${15} ## default none
 
 if [[ ("$tissue" -ne "none" )]]; then
 optional=" ${optional}  --tissue ${tissue} "
 fi
 
-start=${17}  ## default none
-stop=${18}   ## default none 
+start=${16}  ## default none
+stop=${17}   ## default none 
 #if [[ (-n "$start") && (-n "$stop") ]]; then
 if [[ ("$start" -ne "none" ) &&  ("$stop" -ne "none") ]]; then
-optional="${optional} --chr ${chr} --start ${start} --stop ${stop} "
+optional="${optional}  --start ${start} --stop ${stop} "
 fi
 
 
@@ -74,6 +75,16 @@ if [[ -f ${outdir}/finemapping.focus.tsv ]]; then
     touch ${outdir}/finemapping.focus.tsv
 fi    
 
+## Rename PDF files of the images
+
+pdf=$(ls ${outdir} | grep pdf  || echo 'nope')
+if [[ $pdf != 'nope' ]]; then
+  j=1
+  for file in ${pdf[*]}; do
+    mv ${outdir}/$file ${outdir}/pdf_${j}.pdf
+    j=$((j+1))
+  done 
+fi
 
 ### How to Run
 ## ---> focus finemap {Options} gwas_summary plinkref weights
