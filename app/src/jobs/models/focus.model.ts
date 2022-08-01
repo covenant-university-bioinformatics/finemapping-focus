@@ -132,7 +132,7 @@ interface FocusAttrs {
   all_gwas_sig: TrueFalseOptions;
   p_threshold: string;
   ridge_term: string;
-  intercept: TrueFalseOptions;
+  // intercept: TrueFalseOptions;
   max_genes: string;
   prior_prob: string;
   credible_level: string;

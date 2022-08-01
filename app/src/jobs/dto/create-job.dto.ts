@@ -82,9 +82,9 @@ export class CreateJobDto {
   @IsNumberString()
   ridge_term: string;
 
-  @IsNotEmpty()
-  @IsEnum(TrueFalseOptions)
-  intercept: TrueFalseOptions;
+  // @IsNotEmpty()
+  // @IsEnum(TrueFalseOptions)
+  // intercept: TrueFalseOptions;
 
   @IsNumberString()
   max_genes: string;
