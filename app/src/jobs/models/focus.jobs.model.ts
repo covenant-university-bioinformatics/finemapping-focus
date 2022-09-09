@@ -62,7 +62,6 @@ const FocusJobSchema = new mongoose.Schema<FocusJobsDoc, JobsModel>(
     inputFile: {
       type: String,
       required: [true, 'Please add a input filename'],
-      unique: true,
       trim: true,
     },
     focusResultsFile: {
